@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbartosi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_store(char *str)
 {
@@ -65,14 +65,14 @@ char	*ft_append(int fd, char *str)
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	*str;
+	static char	*str[1024];
 
 	if (BUFFER_SIZE <= 0 || fd < 0)
 		return (0);
-	str = ft_append(fd, str);
-	if (!str)
+	str[fd] = ft_append(fd, str[fd]);
+	if (!str[fd])
 		return (0);
-	line = ft_get_line(str);
-	str = ft_store(str);
+	line = ft_get_line(str[fd]);
+	str[fd] = ft_store(str[fd]);
 	return (line);
 }
